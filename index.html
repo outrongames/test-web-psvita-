@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Pesado Extremo para PSVita</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        #log {
+            width: 25%;
+            height: 100vh;
+            overflow-y: scroll;
+            background-color: #f4f4f4;
+            border-left: 3px solid #333;
+            padding: 10px;
+        }
+
+        #content {
+            width: 70%;
+            padding: 20px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        /* Animações e transformações pesadas */
+        .heavy-animation {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            animation: spin 0.5s infinite ease-in-out, grow 1s infinite alternate;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes grow {
+            0% { transform: scale(1); }
+            100% { transform: scale(2); }
+        }
+
+        /* Gradientes e efeitos pesados */
+        .gradient-bg {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(90deg, rgba(255,0,150,1) 0%, rgba(0,204,255,1) 100%);
+        }
+
+        /* Colunas de layout com flex e grid */
+        .flex-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .grid-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .grid-box div {
+            background-color: yellow;
+            padding: 20px;
+        }
+
+        /* Media queries */
+        @media (max-width: 600px) {
+            body {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="content">
+    <h1>Teste Extremo de Performance no PSVita</h1>
+
+    <!-- Animação Pesada -->
+    <div class="heavy-animation"></div>
+
+    <!-- Gradiente Pesado -->
+    <div class="gradient-bg"></div>
+
+    <!-- Flex e Grid layout -->
+    <div class="flex-box">
+        <div style="background-color: red; padding: 20px;">Caixa 1</div>
+        <div style="background-color: green; padding: 20px;">Caixa 2</div>
+        <div style="background-color: blue; padding: 20px;">Caixa 3</div>
+    </div>
+
+    <div class="grid-box">
+        <div>Grid 1</div>
+        <div>Grid 2</div>
+        <div>Grid 3</div>
+    </div>
+
+    <!-- Vídeos pesados -->
+    <video id="testVideo" controls width="300">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos HTML5.
+    </video>
+
+    <!-- Gráficos SVG -->
+    <svg id="testSVG" width="300" height="200">
+        <rect x="50" y="50" width="150" height="100" stroke="black" stroke-width="5" fill="red" />
+    </svg>
+
+    <!-- Teste de WebGL -->
+    <canvas id="webglCanvas" width="300" height="200"></canvas>
+
+    <!-- Tabelas -->
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr><th>Coluna 1</th><th>Coluna 2</th><th>Coluna 3</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Linha 1</td><td>Linha 1</td><td>Linha 1</td></tr>
+            <tr><td>Linha 2</td><td>Linha 2</td><td>Linha 2</td></tr>
+            <tr><td>Linha 3</td><td>Linha 3</td><td>Linha 3</td></tr>
+        </tbody>
+    </table>
+
+    <!-- Formulário -->
+    <form>
+        <label for="textInput">Texto:</label>
+        <input type="text" id="textInput" name="textInput"><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+
+</div>
+
+<div id="log">
+    <h3>Log de Erros e Atividades</h3>
+</div>
+
+<script>
+    // Função para logar informações
+    function logMessage(message, isError = false) {
+        const logContainer = document.getElementById('log');
+        const logEntry = document.createElement('p');
+        logEntry.textContent = message;
+        logEntry.className = isError ? 'error' : 'success';
+        logContainer.appendChild(logEntry);
+    }
+
+    // Tentar carregar Animação
+    try {
+        const animationBox = document.querySelector('.heavy-animation');
+        if (animationBox) {
+            logMessage('Animação CSS pesada carregada com sucesso.');
+        }
+    } catch (e) {
+        logMessage('Erro ao carregar animação CSS.', true);
+    }
+
+    // Tentar carregar Vídeo
+    const video = document.getElementById('testVideo');
+    video.addEventListener('error', () => logMessage('Erro ao carregar vídeo.', true));
+    video.addEventListener('canplay', () => logMessage('Vídeo carregado com sucesso.'));
+
+    // Tentar carregar SVG
+    try {
+        const svg = document.getElementById('testSVG');
+        if (svg) {
+            logMessage('SVG carregado com sucesso.');
+        }
+    } catch (e) {
+        logMessage('Erro ao carregar SVG.', true);
+    }
+
+    // Tentar carregar WebGL
+    try {
+        const canvas = document.getElementById('webglCanvas');
+        const gl = canvas.getContext('webgl');
+        if (!gl) {
+            throw new Error('WebGL não suportado.');
+        }
+        logMessage('WebGL carregado com sucesso.');
+    } catch (e) {
+        logMessage(e.message, true);
+    }
+
+    // Teste de Flexbox
+    try {
+        const flexbox = document.querySelector('.flex-box');
+        if (flexbox) {
+            logMessage('Layout Flexbox carregado com sucesso.');
+        }
+    } catch (e) {
+        logMessage('Erro ao carregar Flexbox.', true);
+    }
+
+    // Teste de Grid
+    try {
+        const gridbox = document.querySelector('.grid-box');
+        if (gridbox) {
+            logMessage('Layout Grid carregado com sucesso.');
+        }
+    } catch (e) {
+        logMessage('Erro ao carregar Grid.', true);
+    }
+</script>
+
+</body>
+</html>
